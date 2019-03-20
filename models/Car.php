@@ -92,11 +92,12 @@ class Car
 
     public function dashboard()
     {
-        // $data = $this->db->select($this->tblName, $conditions);
-        $data = [
-            ['manufacturer_name' => 'Maruti','model_id' => 2,'model_name' => 'WagonR', 'count' => 2],
-            ['manufacturer_name' => 'Honda','model_id' => 1,'model_name' => 'Brio', 'count' => 1],
+        $conditions = [
+            'select' => 'manufacturers.name as manufacturer_name, models.id, models.name as model_name, count(cars.id) as count',
+            'joins' => ['LEFT JOIN models on (models.id=cars.model_id)','LEFT JOIN manufacturers on (manufacturers.id=models.manufacturer_id)'],
+            'group' => 'models.id',
         ];
+        $data = $this->db->select($this->tblName, $conditions);
         if ($data === false) {
             return [
                 'code' => 500,

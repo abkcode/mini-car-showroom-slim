@@ -31,6 +31,14 @@ class Database
         $sql = 'SELECT ';
         $sql .= array_key_exists("select", $conditions) ? $conditions['select'] : '*';
         $sql .= ' FROM '.$table;
+        if (array_key_exists("joins", $conditions)) {
+            foreach ($conditions['joins'] as $value) {
+                $sql .= ' '.$value.' ';
+            }
+        }
+        if (array_key_exists("group", $conditions)) {
+            $sql .= 'GROUP BY '.$conditions['group'];
+        }
         if (array_key_exists("where", $conditions)) {
             $sql .= ' WHERE ';
             $i = 0;
