@@ -34,14 +34,14 @@ $app->add(function ($req, $res, $next) {
 });
 
 $app->get('/manufacturers', function (Request $request, Response $response, array $args) {
-    require_once("./models/Manufacturer.php");
+    require_once(__DIR__."/../models/Manufacturer.php");
     $manufacturer = new Manufacturer();
     $res = $manufacturer->index();
     return $response->withJson($res['response'], $res['code']);
 });
 
 $app->post('/manufacturers/add', function (Request $request, Response $response, array $args) {
-    require_once("./models/Manufacturer.php");
+    require_once(__DIR__."/../models/Manufacturer.php");
     $manufacturer = new Manufacturer();
     $postData = json_decode(file_get_contents('php://input'), true);
     $res = $manufacturer->add($postData);
@@ -49,14 +49,14 @@ $app->post('/manufacturers/add', function (Request $request, Response $response,
 });
 
 $app->get('/models', function (Request $request, Response $response, array $args) {
-    require_once("./models/Model.php");
+    require_once(__DIR__."/../models/Model.php");
     $mdoel = new Model();
     $res = $mdoel->index();
     return $response->withJson($res['response'], $res['code']);
 });
 
 $app->post('/models/add', function (Request $request, Response $response, array $args) {
-    require_once("./models/Model.php");
+    require_once(__DIR__."/../models/Model.php");
     $model = new Model();
     $postData = json_decode(file_get_contents('php://input'), true);
     $res = $model->add($postData);
@@ -64,28 +64,28 @@ $app->post('/models/add', function (Request $request, Response $response, array 
 });
 
 $app->get('/cars', function (Request $request, Response $response, array $args) {
-    require_once("./models/Car.php");
+    require_once(__DIR__."/../models/Car.php");
     $car = new Car();
     $res = $car->index($_GET);
     return $response->withJson($res['response'], $res['code']);
 });
 
 $app->get('/cars/dashboard', function (Request $request, Response $response, array $args) {
-    require_once("./models/Car.php");
+    require_once(__DIR__."/../models/Car.php");
     $car = new Car();
     $res = $car->dashboard();
     return $response->withJson($res['response'], $res['code']);
 });
 
 $app->post('/cars/add', function (Request $request, Response $response, array $args) {
-    require_once("./models/Car.php");
+    require_once(__DIR__."/../models/Car.php");
     $car = new Car();
     $res = $car->add();
     return $response->withJson($res['response'], $res['code']);
 });
 
 $app->post('/cars/upload_image', function (Request $request, Response $response, array $args) {
-    require_once("./models/Car.php");
+    require_once(__DIR__."/../models/Car.php");
     $car = new Car();
     $res = $car->uploadFile($request, $this->get('upload_directory'));
     return $response->withJson($res['response'], $res['code']);
@@ -96,7 +96,7 @@ $app->options('/cars/{id}', function (Request $request, Response $response, arra
 });
 
 $app->delete('/cars/{id}', function (Request $request, Response $response, array $args) {
-    require_once("./models/Car.php");
+    require_once(__DIR__."/../models/Car.php");
     $car = new Car();
     $res = $car->delete($args['id']);
     return $response->withJson($res['response'], $res['code']);
